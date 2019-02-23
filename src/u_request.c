@@ -493,6 +493,7 @@ struct _u_request * ulfius_duplicate_request(const struct _u_request * request) 
           (new_request->map_cookie == NULL && request->map_cookie != NULL) || 
           (new_request->map_post_body == NULL && request->map_post_body != NULL)) {
         ulfius_clean_request_full(new_request);
+        y_log_message(Y_LOG_LEVEL_ERROR, "Ulfius - Error copy request components");
         return NULL;
       }
       if (request->binary_body != NULL && request->binary_body_length > 0) {
@@ -526,9 +527,12 @@ struct _u_request * ulfius_duplicate_request(const struct _u_request * request) 
       }
 #endif
     } else {
+      y_log_message(Y_LOG_LEVEL_ERROR, "Ulfius - Error ulfius_init_request");
       o_free(new_request);
       new_request = NULL;
     }
+  } else {
+    y_log_message(Y_LOG_LEVEL_ERROR, "Ulfius - Error source request is NULL");
   }
   return new_request;
 }
