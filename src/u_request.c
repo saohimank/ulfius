@@ -269,6 +269,7 @@ int ulfius_init_request(struct _u_request * request) {
     request->http_verb = NULL;
     request->http_url = NULL;
     request->proxy = NULL;
+    request->network_type = U_USE_ALL;
     request->timeout = 0L;
     request->check_server_certificate = 1;
     request->client_address = NULL;
@@ -356,6 +357,7 @@ int ulfius_copy_request(struct _u_request * dest, const struct _u_request * sour
     dest->http_verb = o_strdup(source->http_verb);
     dest->http_url = o_strdup(source->http_url);
     dest->proxy = o_strdup(source->proxy);
+    dest->network_type = source->network_type;
     dest->check_server_certificate = source->check_server_certificate;
     dest->timeout = source->timeout;
     dest->auth_basic_user = o_strdup(source->auth_basic_user);
@@ -459,6 +461,7 @@ struct _u_request * ulfius_duplicate_request(const struct _u_request * request) 
       new_request->http_verb = o_strdup(request->http_verb);
       new_request->http_url = o_strdup(request->http_url);
       new_request->proxy = o_strdup(request->proxy);
+      new_request->network_type = request->network_type;
       if ((new_request->http_verb == NULL && request->http_verb != NULL) ||
           (new_request->http_url == NULL && request->http_url != NULL) ||
           (new_request->proxy == NULL && request->proxy != NULL) ||
